@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="min_time">500</integer>
+    <integer name="min_distance">0</integer>
+    <integer name="number_steps">10</integer>
+</resources>
