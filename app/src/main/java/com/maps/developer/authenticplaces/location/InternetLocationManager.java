@@ -15,7 +15,7 @@ import com.maps.developer.authenticplaces.R;
 import com.maps.developer.authenticplaces.interfaces.LocationReceiver;
 
 public class InternetLocationManager {
-    private static final String TAG = MapsActivity.class.getSimpleName();
+    private static final String TAG = InternetLocationManager.class.getSimpleName();
 
     private int minTime;
     private int minDistance;

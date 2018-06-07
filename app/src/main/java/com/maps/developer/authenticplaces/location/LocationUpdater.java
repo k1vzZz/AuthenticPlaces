@@ -11,7 +11,7 @@ import com.maps.developer.authenticplaces.R;
 import com.maps.developer.authenticplaces.interfaces.LocationReceiver;
 
 public class LocationUpdater implements LocationReceiver {
-    private static final String TAG = MapsActivity.class.getSimpleName();
+    private static final String TAG = LocationUpdater.class.getSimpleName();
 
     private Location mCurrentLocation;
     private GPSManager gpsManager;

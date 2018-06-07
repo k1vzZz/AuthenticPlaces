@@ -29,7 +29,7 @@ import com.maps.developer.authenticplaces.MapsActivity;
 import com.maps.developer.authenticplaces.interfaces.LocationReceiver;
 
 public class GPSManager extends LocationCallback implements LocationReceiver {
-    private static final String TAG = MapsActivity.class.getSimpleName();
+    private static final String TAG = GPSManager.class.getSimpleName();
 
     public static final String PROVIDER_GPS = "fused";
     public static final String PROVIDER_NETWORK = "network";

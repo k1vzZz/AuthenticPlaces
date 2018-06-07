@@ -5,4 +5,9 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorFloating">#F2F2F2</color>
     <color name="colorFloatingAnim">#B3B3B3</color>
+    <color name="colorBackgroundBottomSheet">#F2F2F2</color>
+    <color name="colorBackgroundToolbar">#a3afed</color>
+    <color name="colorBackgroundSnackbar">#1ee714</color>
+    <color name="colorCommentContent">#000000</color>
+    <color name="colorCommentTime">#a0a0a0</color>
 </resources>

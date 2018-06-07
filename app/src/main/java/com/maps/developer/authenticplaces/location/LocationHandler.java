@@ -9,7 +9,7 @@ import com.maps.developer.authenticplaces.MapsActivity;
 import com.maps.developer.authenticplaces.interfaces.LocationReceiver;
 
 public class LocationHandler implements LocationListener{
-    private static final String TAG = MapsActivity.class.getSimpleName();
+    private static final String TAG = LocationHandler.class.getSimpleName();
 
     private final LocationReceiver locationReceiver;
 

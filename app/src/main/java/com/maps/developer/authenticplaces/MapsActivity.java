@@ -1,26 +1,39 @@
 package com.maps.developer.authenticplaces;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.maps.developer.authenticplaces.location.GPSManager;
 
-public class MapsActivity extends AppCompatActivity implements View.OnClickListener {
+public class MapsActivity extends AppCompatActivity implements View.OnClickListener, CommentsFragment.OnFragmentInteractionListener {
 
     private static final String TAG = MapsActivity.class.getSimpleName();
 
@@ -31,13 +44,15 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
     private static final int LOCATION_PERMISSION_REQUEST_GPS = 10;
     private static final int LOCATION_PERMISSION_REQUEST_INTERNET = 11;
 
+    private static final int CHOICE_IMAGE = 12;
+
     private static boolean mLocationPermissionsGPS = false;
     private static boolean mLocationPermissionInternet = false;
 
     private MajorManager majorManager;
-    private LocationManager locationManager;
 
     private FloatingActionButton buttonLocation;
+    private FloatingActionButton buttonAdditionMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +67,61 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         Log.d(TAG, "variablesInitialization: initializing.");
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
-        buttonLocation = findViewById(R.id.btnLocation);
+
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_images);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+
+        LinearLayout llBottomSheet = findViewById(R.id.bottom_sheet);
+        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
+
+        Button buttonAdditionImage = (Button) findViewById(R.id.btn_addition_image);
+        buttonAdditionImage.setOnClickListener(this);
+
+        Button buttonComments = (Button) findViewById(R.id.btn_comments);
+        buttonComments.setOnClickListener(this);
+
+        buttonLocation = findViewById(R.id.btn_location);
         buttonLocation.setOnClickListener(this);
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        buttonAdditionMarker = (FloatingActionButton) findViewById(R.id.btn_addition_marker);
+        buttonAdditionMarker.setOnClickListener(this);
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         Log.d(TAG, "variablesInitialization: initializing map");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        majorManager = new MajorManager(this, locationManager, mapFragment);
+        majorManager = new MajorManager(this, locationManager,
+                mapFragment, bottomSheetBehavior);
+
+        recyclerView.setAdapter(majorManager.getAdapter());
+    }
+
+    public NetworkInfo getActiveNetworkInfo() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+//        return super.onRetainCustomNonConfigurationInstance();
+        return majorManager;
+    }
+
+    @Override
+    public void onDetachFragment() {
+        majorManager.showBottomSheet();
+        buttonAdditionMarker.setVisibility(View.VISIBLE);
+        buttonLocation.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (majorManager.hideBottomSheet()){
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override
@@ -70,9 +133,15 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.option_settings:
-                return true;
             case R.id.option_profile:
+                if (majorManager.isAuthorization()){
+                    Intent intent = new Intent(this, ProfileActivity.class);
+                    intent.putExtra(AccountInfo.RECEIVED_ACCOUNT, majorManager.getAccount());
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(this, SignInActivity.class);
+                    startActivityForResult(intent, AccountInfo.REQUEST_SIGN);
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -81,9 +150,24 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btnLocation) {
-            Log.d(TAG, "buttonSearch: onCLick");
-            searchingDeviceLocation();
+        switch (v.getId()){
+            case R.id.btn_location:
+                Log.d(TAG, "buttonLocation: onCLick");
+                searchingDeviceLocation();
+                break;
+            case R.id.btn_addition_image:
+                Log.d(TAG, "buttonAdditionImage: onClick");
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, CHOICE_IMAGE);
+                break;
+            case R.id.btn_comments:
+                Log.d(TAG, "buttonComments: onClick");
+                majorManager.showCommentsFragment(this);
+                buttonAdditionMarker.setVisibility(View.INVISIBLE);
+                buttonLocation.setVisibility(View.INVISIBLE);
+                majorManager.hideBottomSheet();
+                break;
         }
     }
 
@@ -92,6 +176,7 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         Log.d(TAG, "onResume");
         majorManager.startTrackingLocation(this.getApplicationContext());
+        majorManager.startNetwork(getActiveNetworkInfo());
     }
 
     @Override
@@ -127,6 +212,34 @@ public class MapsActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case RESULT_CANCELED:
                         MajorManager.setAvailableLocationUpdates(false);
+                        break;
+                }
+                break;
+            case AccountInfo.REQUEST_SIGN:
+                Log.d(TAG, "onActivityResult: REQUEST_SIGN");
+                switch (resultCode){
+                    case RESULT_OK:
+                        Log.d(TAG, "onActivityResult: RESULT_OK: signed successful.");
+                        if (data == null) return;
+                        GoogleSignInAccount account = data.getParcelableExtra(AccountInfo.RECEIVED_ACCOUNT);
+                        majorManager.setAccountInfo(account);
+                        Snackbar snackbar = Snackbar.make(findViewById(R.id.main_parent),
+                                R.string.signed_success,
+                                Snackbar.LENGTH_LONG);
+                        View snackBarView = snackbar.getView();
+                        snackBarView.setBackgroundColor(getResources().getColor(R.color.colorBackgroundSnackbar));
+                        snackbar.show();
+                        break;
+                    case RESULT_CANCELED:
+                        Log.d(TAG, "onActivityResult: RESULT_CANCELED");
+                        break;
+                }
+                break;
+            case CHOICE_IMAGE:
+                Log.d(TAG, "onActivityResult: CHOICE_IMAGE");
+                switch (resultCode){
+                    case RESULT_OK:
+                        majorManager.addImageToMarkerContent(data.getData());
                         break;
                 }
                 break;
