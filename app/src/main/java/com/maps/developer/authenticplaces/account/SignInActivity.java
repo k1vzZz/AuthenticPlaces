@@ -1,8 +1,9 @@
-package com.maps.developer.authenticplaces;
+package com.maps.developer.authenticplaces.account;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.maps.developer.authenticplaces.R;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
 

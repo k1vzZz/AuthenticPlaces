@@ -1,4 +1,4 @@
-package com.maps.developer.authenticplaces;
+package com.maps.developer.authenticplaces.account;
 
 import android.net.Uri;
 
@@ -12,6 +12,9 @@ public class AccountInfo {
     public static final int REQUEST_SIGN = 50;
 
     private GoogleSignInAccount account;
+
+    public AccountInfo() {
+    }
 
     public AccountInfo(GoogleSignInAccount account) {
         this.account = account;
@@ -27,5 +30,13 @@ public class AccountInfo {
 
     public Uri getPhotoUrl(){
         return account.getPhotoUrl();
+    }
+
+    public String getEmail() {
+        return account.getEmail();
+    }
+
+    public String getId() {
+        return account.getId();
     }
 }

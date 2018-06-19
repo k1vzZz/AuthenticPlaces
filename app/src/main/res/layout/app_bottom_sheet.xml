@@ -24,16 +24,24 @@
 
         <Button
             android:id="@+id/btn_addition_image"
+            android:drawableStart="@drawable/ic_add_photo"
+            android:gravity="center|center_vertical"
+            android:backgroundTint="@color/colorFloating"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
+            android:textSize="12sp"
             android:text="@string/btn_addition_image"/>
 
         <Button
             android:id="@+id/btn_comments"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:backgroundTint="@color/colorFloating"
+            android:drawableStart="@drawable/ic_comments"
+            android:gravity="center|center_vertical"
             android:layout_weight="1"
+            android:textSize="12sp"
             android:text="@string/btn_comments"/>
     </LinearLayout>
 

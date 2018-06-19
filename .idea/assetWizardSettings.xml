@@ -35,7 +35,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/home/developer/Android/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_dehaze_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/home/developer/Android/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/maps/ic_beenhere_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -45,7 +45,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_action_slide" />
+                                      <entry key="outputName" value="ic_map_new_marker" />
+                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="1bd600" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -81,7 +83,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/home/developer/Android/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/maps/ic_add_location_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/home/developer/Android/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_location_on_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -92,11 +94,9 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="3a4fd6" />
-                            <entry key="height" value="48" />
-                            <entry key="outputName" value="ic_add_marker" />
+                            <entry key="outputName" value="ic_marker_icon" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="$USER_HOME$" />
-                            <entry key="width" value="48" />
                           </map>
                         </option>
                       </PersistentState>

@@ -9,7 +9,7 @@
     tools:context=".MapsActivity"
     android:fitsSystemWindows="true">
 
-    <include layout="@layout/app_toolbar"/>
+    <include android:id="@+id/main_toolbar" layout="@layout/app_toolbar"/>
 
     <FrameLayout
         android:id="@+id/framelayout_map"
@@ -47,5 +47,26 @@
         app:fabSize="normal"
         app:backgroundTint="@color/colorFloating"
         app:rippleColor="@color/colorFloatingAnim"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_cancel_addition_marker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_cancel_additional_marker"
+        app:fabSize="normal"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="80dp"
+        app:layout_anchor="@id/bottom_sheet"
+        app:layout_anchorGravity="top|start"
+        android:visibility="invisible"
+        app:backgroundTint="@color/colorFloating"
+        app:rippleColor="@color/colorFloatingAnim"/>
+
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_downloading"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 
 </android.support.design.widget.CoordinatorLayout>

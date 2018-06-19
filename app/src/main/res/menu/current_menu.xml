@@ -4,8 +4,14 @@
 
     <item
         android:id="@+id/option_profile"
-        android:title="Profile"
+        android:title="@string/profile"
         android:icon="@drawable/ic_profile"
         app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/sign_out"
+        android:title="@string/sign_out"
+        app:showAsAction="always"
+        android:visible="false"/>
 
 </menu>

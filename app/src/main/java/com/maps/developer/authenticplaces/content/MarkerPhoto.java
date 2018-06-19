@@ -1,27 +1,28 @@
-package com.maps.developer.authenticplaces;
+package com.maps.developer.authenticplaces.content;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class MarkerPhoto implements Parcelable {
 
-    private String mUri;
-    private String mTitle;
+    private String uri;
+    private String title;
+    private Bitmap image;
 
-    public MarkerPhoto(String mUri, String mTitle) {
-        this.mUri = mUri;
-        this.mTitle = mTitle;
+    public MarkerPhoto(String uri, String title) {
+        this.uri = uri;
+        this.title = title;
     }
 
     protected MarkerPhoto(Parcel in){
-        mUri = in.readString();
-        mTitle = in.readString();
+        uri = in.readString();
+        title = in.readString();
     }
 
     public static final Creator<MarkerPhoto> CREATOR = new Creator<MarkerPhoto>() {
@@ -43,24 +44,32 @@ public class MarkerPhoto implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mUri);
-        dest.writeString(mTitle);
+        dest.writeString(uri);
+        dest.writeString(title);
     }
 
     public String getUri() {
-        return mUri;
+        return uri;
     }
 
-    public void setUri(String mUri) {
-        this.mUri = mUri;
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
-    public void setTitle(String mTitle) {
-        this.mTitle = mTitle;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
     }
 
     @Override
@@ -68,13 +77,13 @@ public class MarkerPhoto implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MarkerPhoto that = (MarkerPhoto) o;
-        return Objects.equals(mUri, that.mUri) &&
-                Objects.equals(mTitle, that.mTitle);
+        return Objects.equals(uri, that.uri) &&
+                Objects.equals(title, that.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mUri, mTitle);
+        return Objects.hash(uri, title);
     }
 
     public static List<MarkerPhoto> getTestPhotos() {

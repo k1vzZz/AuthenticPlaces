@@ -1,4 +1,4 @@
-package com.maps.developer.authenticplaces.model;
+package com.maps.developer.authenticplaces.model.input;
 
 public class MarkerLatLng {
     private Integer id;

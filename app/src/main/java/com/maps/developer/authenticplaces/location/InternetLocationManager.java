@@ -59,7 +59,7 @@ public class InternetLocationManager {
         }
     }
 
-    public boolean hasInternetConnection(Context context){
+    private boolean hasInternetConnection(Context context){
         Log.d(TAG, "hasInternetConnection");
         ConnectivityManager connectivity = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -32,8 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textSize="12sp"
-                android:layout_marginStart="10dp"
-                android:text="Test text"/>
+                android:layout_marginStart="10dp"/>
 
         </LinearLayout>
 
@@ -43,8 +42,7 @@
             android:layout_height="match_parent"
             android:textColor="@color/colorCommentContent"
             android:textSize="15sp"
-            android:layout_marginTop="10dp"
-            android:text="Comment content"/>
+            android:layout_marginTop="10dp"/>
 
         <TextView
             android:id="@+id/comment_time"
@@ -52,7 +50,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorCommentTime"
             android:textSize="10sp"
-            android:text="time"
             android:layout_gravity="end"/>
 
     </LinearLayout>

@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.Task;
 import com.maps.developer.authenticplaces.MajorManager;
 import com.maps.developer.authenticplaces.MapsActivity;
 import com.maps.developer.authenticplaces.interfaces.LocationReceiver;
+import com.maps.developer.authenticplaces.interfaces.SettingsCallback;
 
 public class GPSManager extends LocationCallback implements LocationReceiver {
     private static final String TAG = GPSManager.class.getSimpleName();
@@ -36,6 +37,7 @@ public class GPSManager extends LocationCallback implements LocationReceiver {
     public static final String LAST_AVAILABLE_LOCATION = "last";
 
     public static final int REQUEST_CHECK_SETTINGS = 20;
+    private final SettingsCallback settingsCallback;
 
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequestHighAccuracy;
@@ -45,8 +47,9 @@ public class GPSManager extends LocationCallback implements LocationReceiver {
     private boolean updating = false;
 
     public GPSManager(Context context, LocationManager locationManager,
-                      LocationReceiver locationReceiver) {
+                      LocationReceiver locationReceiver, SettingsCallback settingsCallback) {
         this.locationReceiver = locationReceiver;
+        this.settingsCallback = settingsCallback;
         this.mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
         internetManager = new InternetLocationManager(context, locationManager, locationReceiver);
         createLocationRequest();
@@ -100,10 +103,13 @@ public class GPSManager extends LocationCallback implements LocationReceiver {
     }
 
     public void startTrackingGPS(Context context){
-        Log.d(TAG, "startTrackingGPS");
-        getLastAvailableDeviceLocation(context);
-        startLocationUpdatesViaGPS(context);
-        internetManager.startUpdateLocation(context);
+        Log.d(TAG, "startTrackingGPS: " + updating);
+        if (updating == false) {
+            getLastAvailableDeviceLocation(context);
+            startLocationUpdatesViaGPS(context);
+            updating = true;
+            internetManager.startUpdateLocation(context);
+        }
     }
 
     public void stopTrackingGPS(){
@@ -125,7 +131,6 @@ public class GPSManager extends LocationCallback implements LocationReceiver {
             return;
         }
         Log.d(TAG, "startLocationUpdatesViaGPS: start updates.");
-        updating = true;
         mFusedLocationClient.requestLocationUpdates(mLocationRequestHighAccuracy,
                 this,
                 null);
@@ -148,7 +153,7 @@ public class GPSManager extends LocationCallback implements LocationReceiver {
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                 Log.d(TAG, "checkSettingsGPS: onSuccess: success.");
-                MajorManager.setAvailableLocationUpdates(true);
+                settingsCallback.updating(true);
                 startTrackingGPS(activity.getApplicationContext());
             }
         });

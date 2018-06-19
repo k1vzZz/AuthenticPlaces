@@ -1,4 +1,4 @@
-package com.maps.developer.authenticplaces;
+package com.maps.developer.authenticplaces.content;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.maps.developer.authenticplaces.R;
 
 import java.util.List;
 

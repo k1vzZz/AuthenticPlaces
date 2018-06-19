@@ -1,4 +1,4 @@
-package com.maps.developer.authenticplaces.model;
+package com.maps.developer.authenticplaces.model.input;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -6,20 +6,20 @@ import com.google.gson.GsonBuilder;
 import java.util.Arrays;
 import java.util.List;
 
-public class InputInfoMarker {
+public class InputInfoLatLngMarker {
 
     private List<MarkerLatLng> markerLatLngList;
 
-    public InputInfoMarker() {
+    public InputInfoLatLngMarker() {
     }
 
-    public InputInfoMarker(List<MarkerLatLng> markerLatLngList) {
+    public InputInfoLatLngMarker(List<MarkerLatLng> markerLatLngList) {
         this.markerLatLngList = markerLatLngList;
     }
 
-    public static InputInfoMarker createFromJSON(String json){
-        Gson gson = new GsonBuilder().create();
-        InputInfoMarker infoMarker = new InputInfoMarker();
+    public static InputInfoLatLngMarker createFromJSON(String json){
+        Gson gson = new Gson();
+        InputInfoLatLngMarker infoMarker = new InputInfoLatLngMarker();
         infoMarker.markerLatLngList = Arrays.asList(gson.fromJson(json, MarkerLatLng[].class));
         return infoMarker;
     }
@@ -34,7 +34,7 @@ public class InputInfoMarker {
 
     @Override
     public String toString() {
-        return "InputInfoMarker{" +
+        return "InputInfoLatLngMarker{" +
                 "markerLatLngList=" + markerLatLngList +
                 '}';
     }

@@ -9,20 +9,30 @@ import android.util.Log;
 import com.maps.developer.authenticplaces.MapsActivity;
 import com.maps.developer.authenticplaces.R;
 import com.maps.developer.authenticplaces.interfaces.LocationReceiver;
+import com.maps.developer.authenticplaces.interfaces.SettingsCallback;
 
-public class LocationUpdater implements LocationReceiver {
+public class LocationUpdater implements LocationReceiver, SettingsCallback {
     private static final String TAG = LocationUpdater.class.getSimpleName();
 
-    private Location mCurrentLocation;
     private GPSManager gpsManager;
     private LocationReceiver locationReceiver;
     private int numberSteps;
+    private boolean updating;
 
     public LocationUpdater(Context context, LocationManager locationManager,
                            LocationReceiver locationReceiver) {
         this.locationReceiver = locationReceiver;
-        gpsManager = new GPSManager(context, locationManager, this);
+        gpsManager = new GPSManager(context, locationManager, this, this);
         numberSteps = context.getResources().getInteger(R.integer.number_steps);
+    }
+
+    public void setUpdating(boolean updating) {
+        this.updating = updating;
+    }
+
+    @Override
+    public void updating(boolean update) {
+        updating = update;
     }
 
     @Override
@@ -32,7 +42,6 @@ public class LocationUpdater implements LocationReceiver {
         Log.d(TAG, "sendLocation: send location in MajorManager.");
         Log.d(TAG, "sendLocation: provider = " + location.getProvider());
         if(checkProviderByLocation(location)) {
-            mCurrentLocation = location;
             locationReceiver.sendLocation(location);
         }
     }
@@ -59,8 +68,8 @@ public class LocationUpdater implements LocationReceiver {
     }
 
     public void startLocationUpdates(Context context){
-        Log.d(TAG, "startLocationUpdates");
-        if (MapsActivity.isLocationPermissionsGPS()){
+        Log.d(TAG, "startLocationUpdates: " + updating);
+        if (MapsActivity.isLocationPermissionsGPS() && updating){
             gpsManager.startTrackingGPS(context);
         }
     }

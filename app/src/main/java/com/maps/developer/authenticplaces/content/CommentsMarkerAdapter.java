@@ -1,4 +1,4 @@
-package com.maps.developer.authenticplaces;
+package com.maps.developer.authenticplaces.content;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.maps.developer.authenticplaces.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,7 +23,7 @@ public class CommentsMarkerAdapter extends RecyclerView.Adapter<CommentsMarkerAd
     private List<CardContent> cardContentList;
     private Context context;
 
-    CommentsMarkerAdapter(Context context, List<CardContent> cardContentList){
+    public CommentsMarkerAdapter(Context context, List<CardContent> cardContentList){
         this.context = context;
         this.cardContentList = cardContentList;
     }
@@ -56,8 +57,6 @@ public class CommentsMarkerAdapter extends RecyclerView.Adapter<CommentsMarkerAd
         CardContent cardContent = cardContentList.get(position);
         Glide.with(context)
                 .load(cardContent.getImageUri())
-                .asBitmap()
-                .error(R.drawable.ic_default_image)
                 .into(holder.accountImage);
         holder.accountLogin.setText(cardContent.getAuthor());
         holder.comment.setText(cardContent.getContent());

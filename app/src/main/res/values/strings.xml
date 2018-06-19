@@ -9,4 +9,10 @@
     <string name="btn_addition_image">Add image</string>
     <string name="btn_comments">Comments</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shared_file_map">map_state</string>
+    <string name="turn_on_internet">Turn on Internet</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="hint_your_comment">Your comment...</string>
+    <string name="description_image_send">image_send</string>
+    <string name="profile">Profile</string>
 </resources>

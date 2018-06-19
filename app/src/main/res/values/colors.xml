@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#78aef4</color>
+    <color name="colorPrimaryDark">#606899</color>
+    <color name="colorAccent">#82b2ff</color>
     <color name="colorFloating">#F2F2F2</color>
     <color name="colorFloatingAnim">#B3B3B3</color>
     <color name="colorBackgroundBottomSheet">#F2F2F2</color>
     <color name="colorBackgroundToolbar">#a3afed</color>
+    <!--<color name="colorBackgroundToolbar">#000000</color>-->
     <color name="colorBackgroundSnackbar">#1ee714</color>
     <color name="colorCommentContent">#000000</color>
     <color name="colorCommentTime">#a0a0a0</color>
