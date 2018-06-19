@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">AuthenticPlaces</string>
-    <string name="server_client_id">624847139361-01nofeb3ta8f6ngve5qst14lam74s6r9.apps.googleusercontent.com</string>
+    <string name="server_client_id"></string>
     <string name="title_activity_maps">Map</string>
     <string name="option_settings">Settings</string>
     <string name="bottom_sheet_content">Sheet content</string>
